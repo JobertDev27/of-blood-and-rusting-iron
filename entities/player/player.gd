@@ -63,5 +63,4 @@ func handle_sprint() -> void:
 		current_stamina -= 1
 	else:
 		speed = 5
-		await get_tree().create_timer(1).timeout
 		current_stamina += 1
