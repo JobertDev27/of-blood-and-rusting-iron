@@ -11,6 +11,7 @@ const MAX_STAMINA : float = 100.0
 var speed : int = 5
 var current_stamina : float = MAX_STAMINA
 var is_sprinting : bool = false
+var can_sprint : bool = true
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -47,7 +48,8 @@ func handle_movement(delta: float) -> void:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 		if Input.is_action_pressed("sprint"):
-			is_sprinting = true
+			if can_sprint:
+				is_sprinting = true
 		else:
 			is_sprinting = false
 	else:
@@ -58,9 +60,16 @@ func handle_sprint() -> void:
 	stamina_bar.value = current_stamina
 	current_stamina = clampf(current_stamina, 0, MAX_STAMINA)
 	
+	if current_stamina == 0:
+		can_sprint = false
+		is_sprinting = false
+	elif current_stamina == MAX_STAMINA:
+		can_sprint = true
+	
 	if is_sprinting:
-		speed = 15
-		current_stamina -= 1
+		if can_sprint:
+			speed = 15
+			current_stamina -= 1
 	else:
 		speed = 5
 		current_stamina += 1
