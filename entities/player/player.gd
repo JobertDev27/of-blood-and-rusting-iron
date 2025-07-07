@@ -24,15 +24,6 @@ func _input(event: InputEvent) -> void:
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-70), deg_to_rad(70))
 
 func _physics_process(delta: float) -> void:
-	stamina_bar.value = current_stamina
-	current_stamina = clampf(current_stamina, 0, MAX_STAMINA)
-	
-	if !is_sprinting:
-		await get_tree().create_timer(1).timeout
-		current_stamina += 1
-	else:
-		current_stamina -= 0.01
-	
 	handle_movement(delta)
 	move_and_slide()
 
@@ -41,6 +32,8 @@ func handle_movement(delta: float) -> void:
 	# Debug: end game
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	
+	handle_sprint()
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -54,15 +47,21 @@ func handle_movement(delta: float) -> void:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 		if Input.is_action_pressed("sprint"):
-			handle_sprint()
+			is_sprinting = true
 		else:
-			speed = 5
 			is_sprinting = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 func handle_sprint() -> void:
-	if current_stamina != 0:
+	stamina_bar.value = current_stamina
+	current_stamina = clampf(current_stamina, 0, MAX_STAMINA)
+	
+	if is_sprinting:
 		speed = 15
-		is_sprinting = true
+		current_stamina -= 1
+	else:
+		speed = 5
+		await get_tree().create_timer(1).timeout
+		current_stamina += 1
