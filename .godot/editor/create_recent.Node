@@ -1,0 +1,6 @@
+CSGBox3D
+Camera3D
+Node3D
+CollisionShape3D
+MeshInstance3D
+CharacterBody3D
