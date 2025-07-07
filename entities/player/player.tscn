@@ -50,3 +50,9 @@ offset_bottom = -113.0
 grow_horizontal = 2
 grow_vertical = 0
 show_percentage = false
+
+[node name="SprintRegen" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="SprintRegen" to="." method="_on_sprint_regen_timeout"]

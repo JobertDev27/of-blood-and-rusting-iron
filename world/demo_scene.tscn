@@ -1,19 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5n3d5cfqy6ww"]
+[gd_scene load_steps=8 format=3 uid="uid://b5n3d5cfqy6ww"]
 
 [ext_resource type="PackedScene" uid="uid://bqwshocqkuujk" path="res://entities/player/player.tscn" id="1_60ubn"]
+[ext_resource type="Texture2D" uid="uid://cqibp841a3dmy" path="res://assets/sky_hdri.exr" id="1_beu2l"]
+[ext_resource type="Texture2D" uid="uid://6j74344kb2g2" path="res://assets/texture_01.svg" id="1_u172u"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_60ubn"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4juh4"]
+panorama = ExtResource("1_beu2l")
 
 [sub_resource type="Sky" id="Sky_u172u"]
-sky_material = SubResource("ProceduralSkyMaterial_60ubn")
+sky_material = SubResource("PanoramaSkyMaterial_4juh4")
 
 [sub_resource type="Environment" id="Environment_beu2l"]
 background_mode = 2
+background_energy_multiplier = 0.1
 sky = SubResource("Sky_u172u")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beu2l"]
+albedo_texture = ExtResource("1_u172u")
+uv1_scale = Vector3(20, 20, 20)
 
 [node name="DemoScene" type="Node3D"]
 
@@ -27,7 +33,8 @@ environment = SubResource("Environment_beu2l")
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(2.74124, 0, 0, 0, 1, 0, 0, 0, 3.00843, -2.84058, 0, -6.61847)
 use_collision = true
-size = Vector3(15.7808, 1, 21.3766)
+size = Vector3(50, 1, 50)
+material = SubResource("StandardMaterial3D_beu2l")
 
 [node name="Player" parent="." instance=ExtResource("1_60ubn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525757, 0)
