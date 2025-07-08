@@ -2,9 +2,9 @@ extends CharacterBody3D
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
-@onready var label: Label = $Control/Label
-@onready var stamina_bar: ProgressBar = $Control/StaminaBar
-@onready var sprint_regen: Timer = $SprintRegen
+@onready var label: Label = $UI/Label
+@onready var stamina_bar: ProgressBar = $UI/StaminaBar
+@onready var sprint_regen: Timer = $Utils/SprintRegen
 
 const JUMP_VELOCITY : float = 4.5
 const MAX_STAMINA : float = 100.0
