@@ -70,6 +70,12 @@ func handle_sprint() -> void:
 	stamina_bar.value = current_stamina
 	current_stamina = clampf(current_stamina, 0, MAX_STAMINA)
 	
+	if current_stamina == MAX_STAMINA:
+		var tween = get_tree().create_tween()
+		tween.tween_property(stamina_bar, "modulate", Color(1, 1, 1, 0), 0.5)
+	else: 
+		stamina_bar.modulate = Color(1, 1,1, 1)
+	
 	if current_stamina == 0:
 		can_sprint = false
 		is_sprinting = false
